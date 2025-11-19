@@ -23,8 +23,8 @@ graph TD
     
     subgraph "Specialist Agents"
         Sum[📝 Summarizer Agent]
-        ChartB[📊 ChartBot Budget ($0.03)]
-        ChartP[📈 ChartBot Pro ($0.05)]
+        ChartB["📊 ChartBot Budget ($0.03)"]
+        ChartP["📈 ChartBot Pro ($0.05)"]
     end
     
     PM -->|2. Hire & Validate| Sum
