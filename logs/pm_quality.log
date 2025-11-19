@@ -1,0 +1,125 @@
+/Users/akshay/Build/Sanre/ai_marketplace/project_manager_agent.py:429: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+🚀 Starting PM_Quality on port 8005
+INFO:     Started server process [63904]
+INFO:     Waiting for application startup.
+
+🤖 PM_Quality starting up...
+   Strategy: quality_maximization
+   Weights: {'price': 0.1, 'quality': 0.8, 'speed': 0.1}
+✅ Registered with registry
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8005 (Press CTRL+C to quit)
+
+============================================================
+🎯 PROJECT MANAGER (quality_maximization): New job received!
+📋 Task: Test quality PM
+⏰ Time: 2025-11-19 21:23:08 UTC
+============================================================
+🤖 PROJECT MANAGER: Analyzing task and hiring specialists...
+
+📍 STEP 1: Hiring text summarization specialist...
+   🔍 Searching registry for: summarize_text
+   🎰 SINGLE CANDIDATE (No lottery needed):
+      🏆 TextSummarize_v1 (Only match found)
+   🔄 Calling TextSummarize_v1...
+   ✅ Result validated: Valid
+   ✅ Summary complete from TextSummarize_v1
+
+📍 STEP 2: Hiring chart generation specialist...
+   🔍 Searching registry for: generate_charts
+   🎰 SINGLE CANDIDATE (No lottery needed):
+      🏆 ChartBot_Pro_v1 (Only match found)
+   🔄 Calling ChartBot_Pro_v1...
+   ✅ Result validated: Valid
+   ✅ Chart complete from ChartBot_Pro_v1
+   📏 Chart size: 52752 bytes (base64 PNG)
+
+📍 STEP 3: Compiling final report...
+   💰 Summarization cost: $0.02
+   💰 Chart generation cost: $0.05
+   💰 Total specialist costs: $0.07
+   💰 Project Manager fee: $0.10
+   💰 GRAND TOTAL: $0.17
+
+✅ PROJECT MANAGER: All tasks complete! Delivering final report.
+============================================================
+
+INFO:     127.0.0.1:58743 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+🎯 PROJECT MANAGER (quality_maximization): New job received!
+📋 Task: Test quality PM
+⏰ Time: 2025-11-19 21:23:12 UTC
+============================================================
+🤖 PROJECT MANAGER: Analyzing task and hiring specialists...
+
+📍 STEP 1: Hiring text summarization specialist...
+   🔍 Searching registry for: summarize_text
+   🎰 SINGLE CANDIDATE (No lottery needed):
+      🏆 TextSummarize_v1 (Only match found)
+   🔄 Calling TextSummarize_v1...
+   ✅ Result validated: Valid
+   ✅ Summary complete from TextSummarize_v1
+
+📍 STEP 2: Hiring chart generation specialist...
+   🔍 Searching registry for: generate_charts
+   🎰 SINGLE CANDIDATE (No lottery needed):
+      🏆 ChartBot_Pro_v1 (Only match found)
+   🔄 Calling ChartBot_Pro_v1...
+   ✅ Result validated: Valid
+   ✅ Chart complete from ChartBot_Pro_v1
+   📏 Chart size: 52752 bytes (base64 PNG)
+
+📍 STEP 3: Compiling final report...
+   💰 Summarization cost: $0.02
+   💰 Chart generation cost: $0.05
+   💰 Total specialist costs: $0.07
+   💰 Project Manager fee: $0.10
+   💰 GRAND TOTAL: $0.17
+
+✅ PROJECT MANAGER: All tasks complete! Delivering final report.
+============================================================
+
+INFO:     127.0.0.1:58751 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+🎯 PROJECT MANAGER (quality_maximization): New job received!
+📋 Task: Test quality PM
+⏰ Time: 2025-11-19 21:23:16 UTC
+============================================================
+🤖 PROJECT MANAGER: Analyzing task and hiring specialists...
+
+📍 STEP 1: Hiring text summarization specialist...
+   🔍 Searching registry for: summarize_text
+   🎰 SINGLE CANDIDATE (No lottery needed):
+      🏆 TextSummarize_v1 (Only match found)
+   🔄 Calling TextSummarize_v1...
+   ✅ Result validated: Valid
+   ✅ Summary complete from TextSummarize_v1
+
+📍 STEP 2: Hiring chart generation specialist...
+   🔍 Searching registry for: generate_charts
+   🎰 SINGLE CANDIDATE (No lottery needed):
+      🏆 ChartBot_Pro_v1 (Only match found)
+   🔄 Calling ChartBot_Pro_v1...
+   ✅ Result validated: Valid
+   ✅ Chart complete from ChartBot_Pro_v1
+   📏 Chart size: 52752 bytes (base64 PNG)
+
+📍 STEP 3: Compiling final report...
+   💰 Summarization cost: $0.02
+   💰 Chart generation cost: $0.05
+   💰 Total specialist costs: $0.07
+   💰 Project Manager fee: $0.10
+   💰 GRAND TOTAL: $0.17
+
+✅ PROJECT MANAGER: All tasks complete! Delivering final report.
+============================================================
+
+INFO:     127.0.0.1:58758 - "POST /execute_task HTTP/1.1" 200 OK

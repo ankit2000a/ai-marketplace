@@ -1,0 +1,146 @@
+/Users/akshay/Build/Sanre/ai_marketplace/project_manager_agent.py:268: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [47055]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+
+============================================================
+🚀 Starting ProjectManager_v1
+🌐 URL: http://127.0.0.1:8001
+💼 Capability: project_orchestration
+💰 Price: $0.1 per orchestration
+
+📊 Services Offered:
+   - Text summarization (via marketplace)
+   - Chart generation (via marketplace)
+   - Report compilation
+
+============================================================
+
+
+🤖 ProjectManager_v1 starting up...
+📍 Attempting to register with registry (attempt 1/5)...
+✅ Successfully registered with registry!
+   Agent: ProjectManager_v1
+   Capability: project_orchestration
+   Price: $0.1
+
+============================================================
+🎯 PROJECT MANAGER: New job received!
+📋 Task: {'text_to_summarize': 'Full marketplace test with automated startup script!'}
+⏰ Time: 2025-11-18 19:20:30 UTC
+============================================================
+🤖 PROJECT MANAGER: Analyzing task and hiring specialists...
+
+📍 STEP 1: Hiring text summarization specialist...
+   🔍 Searching registry for: summarize_text
+   💰 Selected: TextSummarize_v1 ($0.02) - cheapest option
+   🔗 URL: http://127.0.0.1:8002/execute_task
+   🔄 Calling TextSummarize_v1...
+   ✅ Received response from TextSummarize_v1
+   💵 Cost: $0.02
+   ✅ Summary complete from TextSummarize_v1
+
+📍 STEP 2: Hiring chart generation specialist...
+   🔍 Searching registry for: generate_charts
+   💰 Selected: ChartBot_Budget_v1 ($0.03) - cheapest option
+   🔗 URL: http://127.0.0.1:8004/execute_task
+   🔄 Calling ChartBot_Budget_v1...
+   ✅ Received response from ChartBot_Budget_v1
+   💵 Cost: $0.03
+   ✅ Chart complete from ChartBot_Budget_v1
+   📏 Chart size: 18924 bytes (base64 PNG)
+
+📍 STEP 3: Compiling final report...
+   💰 Summarization cost: $0.02
+   💰 Chart generation cost: $0.03
+   💰 Total specialist costs: $0.05
+   💰 Project Manager fee: $0.10
+   💰 GRAND TOTAL: $0.15
+
+✅ PROJECT MANAGER: All tasks complete! Delivering final report.
+============================================================
+
+INFO:     127.0.0.1:54254 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+🎯 PROJECT MANAGER: New job received!
+📋 Task: {'text_to_summarize': 'Ankit successfully automated the entire AI marketplace startup process with a single script! All 5 services (Registry, PM, Summarizer, 2 ChartBots) now start automatically and register correctly. The system demonstrates real multi-agent collaboration with Google Gemini AI and Matplotlib chart generation. This is production-ready orchestration!'}
+⏰ Time: 2025-11-18 19:21:04 UTC
+============================================================
+🤖 PROJECT MANAGER: Analyzing task and hiring specialists...
+
+📍 STEP 1: Hiring text summarization specialist...
+   🔍 Searching registry for: summarize_text
+   💰 Selected: TextSummarize_v1 ($0.02) - cheapest option
+   🔗 URL: http://127.0.0.1:8002/execute_task
+   🔄 Calling TextSummarize_v1...
+   ✅ Received response from TextSummarize_v1
+   💵 Cost: $0.02
+   ✅ Summary complete from TextSummarize_v1
+
+📍 STEP 2: Hiring chart generation specialist...
+   🔍 Searching registry for: generate_charts
+   💰 Selected: ChartBot_Budget_v1 ($0.03) - cheapest option
+   🔗 URL: http://127.0.0.1:8004/execute_task
+   🔄 Calling ChartBot_Budget_v1...
+   ✅ Received response from ChartBot_Budget_v1
+   💵 Cost: $0.03
+   ✅ Chart complete from ChartBot_Budget_v1
+   📏 Chart size: 18924 bytes (base64 PNG)
+
+📍 STEP 3: Compiling final report...
+   💰 Summarization cost: $0.02
+   💰 Chart generation cost: $0.03
+   💰 Total specialist costs: $0.05
+   💰 Project Manager fee: $0.10
+   💰 GRAND TOTAL: $0.15
+
+✅ PROJECT MANAGER: All tasks complete! Delivering final report.
+============================================================
+
+INFO:     127.0.0.1:54264 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+🎯 PROJECT MANAGER: New job received!
+📋 Task: {'text_to_summarize': 'Day 3-4 Complete! Ankit built a fully functional AI marketplace with automated deployment. Features: 5 autonomous agents, Google Gemini integration, Matplotlib charts, smart agent selection, transaction tracking, and one-command startup. Total development time: 3 days. This demonstrates the future of multi-agent AI systems.'}
+⏰ Time: 2025-11-18 19:21:10 UTC
+============================================================
+🤖 PROJECT MANAGER: Analyzing task and hiring specialists...
+
+📍 STEP 1: Hiring text summarization specialist...
+   🔍 Searching registry for: summarize_text
+   💰 Selected: TextSummarize_v1 ($0.02) - cheapest option
+   🔗 URL: http://127.0.0.1:8002/execute_task
+   🔄 Calling TextSummarize_v1...
+   ✅ Received response from TextSummarize_v1
+   💵 Cost: $0.02
+   ✅ Summary complete from TextSummarize_v1
+
+📍 STEP 2: Hiring chart generation specialist...
+   🔍 Searching registry for: generate_charts
+   💰 Selected: ChartBot_Budget_v1 ($0.03) - cheapest option
+   🔗 URL: http://127.0.0.1:8004/execute_task
+   🔄 Calling ChartBot_Budget_v1...
+   ✅ Received response from ChartBot_Budget_v1
+   💵 Cost: $0.03
+   ✅ Chart complete from ChartBot_Budget_v1
+   📏 Chart size: 18924 bytes (base64 PNG)
+
+📍 STEP 3: Compiling final report...
+   💰 Summarization cost: $0.02
+   💰 Chart generation cost: $0.03
+   💰 Total specialist costs: $0.05
+   💰 Project Manager fee: $0.10
+   💰 GRAND TOTAL: $0.15
+
+✅ PROJECT MANAGER: All tasks complete! Delivering final report.
+============================================================
+
+INFO:     127.0.0.1:54271 - "POST /execute_task HTTP/1.1" 200 OK

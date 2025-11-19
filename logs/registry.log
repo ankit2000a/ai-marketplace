@@ -1,0 +1,206 @@
+INFO:     Started server process [63883]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+============================================================
+🚀 Starting Registry Service
+🌐 URL: http://127.0.0.1:8000
+📊 Features:
+   - Agent registration & discovery
+   - Smart scoring (price, quality, speed, reliability)
+   - Transaction tracking
+   - Rating system
+============================================================
+
+✅ Agent updated: TextSummarize_v1 (summarize_text) - $0.02
+INFO:     127.0.0.1:58650 - "POST /register HTTP/1.1" 200 OK
+✅ Agent updated: ChartBot_Budget_v1 (generate_charts) - $0.03
+INFO:     127.0.0.1:58652 - "POST /register HTTP/1.1" 200 OK
+✅ Agent updated: ChartBot_Pro_v1 (generate_charts) - $0.05
+INFO:     127.0.0.1:58654 - "POST /register HTTP/1.1" 200 OK
+✅ Agent updated: PM_Balanced (project_orchestration) - $0.1
+INFO:     127.0.0.1:58658 - "POST /register HTTP/1.1" 200 OK
+✅ Agent updated: PM_Budget (project_orchestration) - $0.1
+INFO:     127.0.0.1:58659 - "POST /register HTTP/1.1" 200 OK
+✅ Agent updated: PM_Quality (project_orchestration) - $0.1
+INFO:     127.0.0.1:58660 - "POST /register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58661 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58667 - "GET /search?capability=summarize_text&max_price=0.04 HTTP/1.1" 200 OK
+✅ Transaction: PM_Budget → TextSummarize_v1
+   Success rate: 100.0% (45/45)
+INFO:     127.0.0.1:58671 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58672 - "GET /search?capability=generate_charts&max_price=0.04 HTTP/1.1" 200 OK
+✅ Transaction: PM_Budget → ChartBot_Budget_v1
+   Success rate: 100.0% (34/34)
+INFO:     127.0.0.1:58674 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58676 - "GET /search?capability=summarize_text&max_price=0.04 HTTP/1.1" 200 OK
+✅ Transaction: PM_Budget → TextSummarize_v1
+   Success rate: 100.0% (46/46)
+INFO:     127.0.0.1:58678 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58679 - "GET /search?capability=generate_charts&max_price=0.04 HTTP/1.1" 200 OK
+✅ Transaction: PM_Budget → ChartBot_Budget_v1
+   Success rate: 100.0% (35/35)
+INFO:     127.0.0.1:58681 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58685 - "GET /search?capability=summarize_text&max_price=0.04 HTTP/1.1" 200 OK
+✅ Transaction: PM_Budget → TextSummarize_v1
+   Success rate: 100.0% (47/47)
+INFO:     127.0.0.1:58687 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58688 - "GET /search?capability=generate_charts&max_price=0.04 HTTP/1.1" 200 OK
+✅ Transaction: PM_Budget → ChartBot_Budget_v1
+   Success rate: 100.0% (36/36)
+INFO:     127.0.0.1:58690 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58744 - "GET /search?capability=summarize_text&min_rating=4.0 HTTP/1.1" 200 OK
+✅ Transaction: PM_Quality → TextSummarize_v1
+   Success rate: 100.0% (48/48)
+INFO:     127.0.0.1:58747 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58748 - "GET /search?capability=generate_charts&min_rating=4.0 HTTP/1.1" 200 OK
+✅ Transaction: PM_Quality → ChartBot_Pro_v1
+   Success rate: 100.0% (12/12)
+INFO:     127.0.0.1:58750 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58752 - "GET /search?capability=summarize_text&min_rating=4.0 HTTP/1.1" 200 OK
+✅ Transaction: PM_Quality → TextSummarize_v1
+   Success rate: 100.0% (49/49)
+INFO:     127.0.0.1:58754 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58755 - "GET /search?capability=generate_charts&min_rating=4.0 HTTP/1.1" 200 OK
+✅ Transaction: PM_Quality → ChartBot_Pro_v1
+   Success rate: 100.0% (13/13)
+INFO:     127.0.0.1:58757 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58759 - "GET /search?capability=summarize_text&min_rating=4.0 HTTP/1.1" 200 OK
+✅ Transaction: PM_Quality → TextSummarize_v1
+   Success rate: 100.0% (50/50)
+INFO:     127.0.0.1:58761 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58762 - "GET /search?capability=generate_charts&min_rating=4.0 HTTP/1.1" 200 OK
+✅ Transaction: PM_Quality → ChartBot_Pro_v1
+   Success rate: 100.0% (14/14)
+INFO:     127.0.0.1:58764 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58806 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (51/51)
+INFO:     127.0.0.1:58808 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58809 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Budget_v1
+   Success rate: 100.0% (37/37)
+INFO:     127.0.0.1:58811 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58813 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (52/52)
+INFO:     127.0.0.1:58816 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58817 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Pro_v1
+   Success rate: 100.0% (15/15)
+INFO:     127.0.0.1:58819 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58821 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (53/53)
+INFO:     127.0.0.1:58823 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58824 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Pro_v1
+   Success rate: 100.0% (16/16)
+INFO:     127.0.0.1:58826 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58830 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (54/54)
+INFO:     127.0.0.1:58832 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58833 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Pro_v1
+   Success rate: 100.0% (17/17)
+INFO:     127.0.0.1:58835 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58837 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (55/55)
+INFO:     127.0.0.1:58839 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58840 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Pro_v1
+   Success rate: 100.0% (18/18)
+INFO:     127.0.0.1:58842 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58858 - "GET /transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58873 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (56/56)
+INFO:     127.0.0.1:58875 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58876 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Pro_v1
+   Success rate: 100.0% (19/19)
+INFO:     127.0.0.1:58878 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58880 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (57/57)
+INFO:     127.0.0.1:58882 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58883 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Budget_v1
+   Success rate: 100.0% (38/38)
+INFO:     127.0.0.1:58885 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58887 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (58/58)
+INFO:     127.0.0.1:58889 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58890 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Pro_v1
+   Success rate: 100.0% (20/20)
+INFO:     127.0.0.1:58893 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58896 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (59/59)
+INFO:     127.0.0.1:58898 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58899 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Budget_v1
+   Success rate: 100.0% (39/39)
+INFO:     127.0.0.1:58901 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58903 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (60/60)
+INFO:     127.0.0.1:58905 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58906 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Pro_v1
+   Success rate: 100.0% (21/21)
+INFO:     127.0.0.1:58908 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58910 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (61/61)
+INFO:     127.0.0.1:58912 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58913 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Budget_v1
+   Success rate: 100.0% (40/40)
+INFO:     127.0.0.1:58915 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58917 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (62/62)
+INFO:     127.0.0.1:58919 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58920 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Pro_v1
+   Success rate: 100.0% (22/22)
+INFO:     127.0.0.1:58922 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58926 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (63/63)
+INFO:     127.0.0.1:58928 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58929 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Budget_v1
+   Success rate: 100.0% (41/41)
+INFO:     127.0.0.1:58931 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58933 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (64/64)
+INFO:     127.0.0.1:58935 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58936 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Budget_v1
+   Success rate: 100.0% (42/42)
+INFO:     127.0.0.1:58938 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58941 - "GET /search?capability=summarize_text HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → TextSummarize_v1
+   Success rate: 100.0% (65/65)
+INFO:     127.0.0.1:58943 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58944 - "GET /search?capability=generate_charts HTTP/1.1" 200 OK
+✅ Transaction: PM_Balanced → ChartBot_Budget_v1
+   Success rate: 100.0% (43/43)
+INFO:     127.0.0.1:58946 - "POST /report_transaction HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58950 - "GET /transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58951 - "GET /transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58952 - "GET /transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59005 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59006 - "GET /transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59007 - "GET /transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59008 - "GET /transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59009 - "GET /transactions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59011 - "GET /agents HTTP/1.1" 200 OK

@@ -1,0 +1,274 @@
+INFO:     Started server process [63890]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8002 (Press CTRL+C to quit)
+
+============================================================
+🚀 Starting TextSummarize_v1
+🌐 URL: http://127.0.0.1:8002
+💼 Capability: summarize_text
+💰 Price: $0.02 per task
+🤖 AI Provider: Google Gemini
+============================================================
+
+🤖 TextSummarize_v1 starting up...
+🔑 Gemini API configured (using REAL AI)
+📍 Attempting to register with registry at http://127.0.0.1:8000
+✅ Successfully registered with registry!
+   Agent: TextSummarize_v1
+   Capability: summarize_text
+   URL: http://127.0.0.1:8002/execute_task
+   Price: $0.02
+   🎯 NOW USING REAL GEMINI AI
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 137 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58668 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 96 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58677 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 183 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58686 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 15 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 297 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58745 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 15 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 273 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58753 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 15 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 287 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58760 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 16 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 232 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58807 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 16 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 240 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58814 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 16 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 158 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58822 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 16 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 290 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58831 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 16 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 393 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58838 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 156 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58874 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 104 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58881 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 244 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58888 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 174 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58897 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 181 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58904 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 290 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58911 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 241 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58918 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 265 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58927 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 14 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 177 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58934 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📋 Received summarization task
+   Input length: 15 characters
+============================================================
+🤖 Calling Gemini AI...
+✅ Summary generated successfully!
+   Output length: 219 characters
+   Invoice: $0.02
+============================================================
+
+INFO:     127.0.0.1:58942 - "POST /execute_task HTTP/1.1" 200 OK

@@ -1,0 +1,120 @@
+/Users/akshay/Build/Sanre/ai_marketplace/chartbot_budget_agent.py:226: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [63893]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8004 (Press CTRL+C to quit)
+
+============================================================
+🚀 Starting ChartBot_Budget_v1 on http://127.0.0.1:8004
+💼 Capability: generate_charts
+💰 Price: $0.03 (40% cheaper!)
+🎨 Quality: 72 DPI (Budget)
+📊 Chart Types: pie, bar, line
+
+============================================================
+
+
+🤖 ChartBot_Budget_v1 starting up...
+🎨 Matplotlib configured (DPI: 72)
+📍 Attempting to register with registry at http://127.0.0.1:8000
+✅ Successfully registered with registry!
+   Agent: ChartBot_Budget_v1
+   Capability: generate_charts
+   Price: $0.03
+   Quality: 72 DPI (Premium)
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58673 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58680 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58689 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58810 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58884 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58900 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58914 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58930 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58937 - "POST /execute_task HTTP/1.1" 200 OK
+
+============================================================
+📊 Received chart generation task
+   Chart type: bar
+   Data keys: ['categories', 'values', 'title', 'xlabel', 'ylabel']
+============================================================
+🎨 Generating bar chart with matplotlib...
+✅ Chart generated successfully (18924 bytes)
+INFO:     127.0.0.1:58945 - "POST /execute_task HTTP/1.1" 200 OK
