@@ -137,63 +137,96 @@ def generate_line_chart(data: dict) -> str:
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Line chart generation failed: {str(e)}")
 
+from a2a_protocol import JobOffer
+
 # ============================================================
 # MAIN TASK ENDPOINT
 # ============================================================
 
-@app.post("/execute_task", response_model=TaskResult)
-async def execute_task(task: Task):
+@app.post("/execute_task")
+async def execute_task(offer: JobOffer):
     """
-    Execute chart generation task
-    
-    Expected task_data format:
-    {
-        "chart_type": "pie" | "bar" | "line",
-        "data": { ... chart-specific data ... }
-    }
+    Execute chart generation task (A2A Protocol)
     """
-    start_time = datetime.now(timezone.utc)
+    print(f"\n🤖 {AGENT_NAME}: Received Job Offer {offer.job_id}")
+    print(f"   Buyer: {offer.buyer_id}")
+    print(f"   Budget: ${offer.constraints.max_price:.2f}")
     
-    print("\n" + "="*60)
-    print(f"📊 Received chart generation task")
+    # 1. CHECK BUDGET
+    if offer.constraints.max_price < PRICE_PER_TASK:
+        print(f"   ❌ REJECTED: Budget ${offer.constraints.max_price:.2f} < Price ${PRICE_PER_TASK:.2f}")
+        return {
+            "status": "rejected",
+            "error": f"Budget too low. My price: ${PRICE_PER_TASK:.2f}",
+            "job_id": offer.job_id
+        }
+    
+    # 2. EXTRACT DATA
+    task_data = offer.task_payload
+    # The instruction implies task_payload might contain a nested "data" key
+    # If the payload is directly the chart data, this check handles it.
+    # If the payload is { "data": { "chart_type": "bar", "data": {...} } }, this handles it.
+    if "data" in task_data and isinstance(task_data["data"], dict):
+        # This assumes the structure is { "data": { "chart_type": "bar", "data": {...} } }
+        # or { "chart_type": "bar", "data": {...} }
+        # Let's assume the instruction means the actual chart data is nested under "data"
+        # within the task_payload, and chart_type is at the top level of task_payload.
+        # Re-interpreting based on common A2A patterns: task_payload *is* the task_data.
+        # The instruction's `if "data" in task_data: task_data = task_data["data"]`
+        # seems to imply the chart data itself is nested.
+        # Let's stick to the instruction's logic for now.
+        # If task_payload is { "chart_type": "bar", "data": { "categories": [...] } }
+        # then `task_data` will be `{ "categories": [...] }` after this line.
+        # This seems to contradict the next lines where `chart_type` is extracted from `task_data`.
+        # Let's assume the instruction meant:
+        # `chart_type = offer.task_payload.get("chart_type", "bar")`
+        # `data = offer.task_payload.get("data", {})`
+        # However, I must follow the instruction faithfully.
+        # The instruction's snippet:
+        # `task_data = offer.task_payload`
+        # `if "data" in task_data: task_data = task_data["data"]`
+        # `chart_type = task_data.get("chart_type", "bar")`
+        # `data = task_data.get("data", {})`
+        # This implies `task_data` is first assigned `offer.task_payload`.
+        # If `offer.task_payload` is `{"data": {"chart_type": "bar", "data": {"categories": [...]}}}`
+        # then `task_data` becomes `{"chart_type": "bar", "data": {"categories": [...]}}`.
+        # Then `chart_type` is extracted as "bar" and `data` as `{"categories": [...]}`.
+        # This seems like a reasonable interpretation.
+        original_task_payload = offer.task_payload
+        if "data" in original_task_payload and isinstance(original_task_payload["data"], dict):
+            # This path is taken if the payload is like {"data": {"chart_type": "bar", "data": {...}}}
+            # In this case, the actual task details are nested under "data".
+            task_details = original_task_payload["data"]
+        else:
+            # This path is taken if the payload is directly {"chart_type": "bar", "data": {...}}
+            task_details = original_task_payload
+
+        chart_type = task_details.get("chart_type", "bar").lower()
+        data = task_details.get("data", {})
+        
+    print(f"   📊 Generating {chart_type} chart...")
     
     try:
-        # Parse task data
-        if isinstance(task.task_data, str):
-            task_dict = json.loads(task.task_data)
-        else:
-            task_dict = task.task_data
-        
-        chart_type = task_dict.get("chart_type", "pie").lower()
-        chart_data = task_dict.get("data", {})
-        
-        print(f"   Chart type: {chart_type}")
-        print(f"   Data keys: {list(chart_data.keys())}")
-        print("="*60)
-        
-        # Generate chart based on type
-        print(f"🎨 Generating {chart_type} chart with matplotlib...")
-        
-        if chart_type == "pie":
-            img_base64 = generate_pie_chart(chart_data)
-        elif chart_type == "bar":
-            img_base64 = generate_bar_chart(chart_data)
+        if chart_type == "bar":
+            result = generate_bar_chart(data)
         elif chart_type == "line":
-            img_base64 = generate_line_chart(chart_data)
+            result = generate_line_chart(data)
         else:
-            raise HTTPException(
-                status_code=400, 
-                detail=f"Unsupported chart type: {chart_type}. Supported: pie, bar, line"
-            )
+            return {
+                "status": "failed",
+                "error": f"Unsupported chart type: {chart_type}",
+                "invoice": 0.0
+            }
+            
+        print(f"   ✅ Chart generated successfully")
         
-        print(f"✅ Chart generated successfully ({len(img_base64)} bytes)")
-        
-        return TaskResult(
-            status="done",
-            result=img_base64,
-            invoice=PRICE_PER_TASK,
-            completed_at=datetime.now(timezone.utc).isoformat()
-        )
+        return {
+            "status": "done",
+            "result": result,
+            "invoice": PRICE_PER_TASK,
+            "job_id": offer.job_id,
+            "agent_name": AGENT_NAME
+        }
         
     except Exception as e:
         print(f"❌ Chart generation failed: {str(e)}")
@@ -217,6 +250,48 @@ async def health():
         "price": PRICE_PER_TASK,
         "chart_types": ["pie", "bar", "line"],
         "dpi": CHART_DPI
+    }
+
+# ============================================================
+# AGENT CARD (PASSPORT)
+# ============================================================
+@app.get("/.well-known/agent.json")
+async def agent_card():
+    """Agent Card - Public metadata about this agent"""
+    return {
+        "protocol_version": "AI_MARKETPLACE_v1",
+        "agent": {
+            "name": AGENT_NAME,
+            "version": "1.0.0",
+            "description": "Premium chart generation (150 DPI)",
+            "vendor": "SanreAI",
+            "homepage": f"http://127.0.0.1:{AGENT_PORT}"
+        },
+        "capabilities": [
+            {
+                "type": CAPABILITY,
+                "supported_chart_types": ["pie", "bar", "line"],
+                "output_formats": ["png"]
+            }
+        ],
+        "pricing": {
+            "model": "fixed",
+            "amount": PRICE_PER_TASK,
+            "currency": "USD",
+            "billing_unit": "per_chart"
+        },
+        "performance": {
+            "avg_latency_ms": 300,
+            "max_concurrent_jobs": 10
+        },
+        "endpoints": {
+            "execute_task": f"http://127.0.0.1:{AGENT_PORT}/execute_task",
+            "health": f"http://127.0.0.1:{AGENT_PORT}/health"
+        },
+        "payment": {
+            "accepted_methods": ["escrow"],
+            "wallet_address": "0x5678...efgh"
+        }
     }
 
 # ============================================================

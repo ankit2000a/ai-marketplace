@@ -105,6 +105,7 @@ class AgentResponse(BaseModel):
     total_jobs: int
     success_rate: float
     avg_response_time: float
+    total_earned: Optional[float] = 0.0
     
     class Config:
         from_attributes = True
@@ -136,7 +137,61 @@ class RateRequest(BaseModel):
 # ============================================================
 # FASTAPI APP
 # ============================================================
-app = FastAPI(title="Agent Marketplace Registry (scoring + ratings)")
+from escrow_manager import EscrowManager, InsufficientFundsError, OverchargeError, EscrowNotFoundError
+
+# ============================================================
+# FASTAPI APP
+# ============================================================
+app = FastAPI(title="Agent Marketplace Registry (scoring + ratings + escrow)")
+
+# Initialize Escrow Manager
+escrow_manager = EscrowManager()
+
+class EscrowCreateRequest(BaseModel):
+    job_id: str
+    buyer_id: str
+    max_price: float
+
+class EscrowReleaseRequest(BaseModel):
+    job_id: str
+    seller_id: str
+    actual_price: float
+
+class EscrowRefundRequest(BaseModel):
+    job_id: str
+
+@app.post("/escrow/create")
+async def create_escrow(req: EscrowCreateRequest):
+    try:
+        escrow_manager.create_escrow(req.job_id, req.buyer_id, req.max_price)
+        return {"status": "success", "message": "Funds locked"}
+    except InsufficientFundsError as e:
+        raise HTTPException(status_code=402, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/escrow/release")
+async def release_escrow(req: EscrowReleaseRequest):
+    try:
+        escrow_manager.release_payment(req.job_id, req.seller_id, req.actual_price)
+        return {"status": "success", "message": "Payment released"}
+    except OverchargeError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/escrow/refund")
+async def refund_escrow(req: EscrowRefundRequest):
+    try:
+        escrow_manager.refund(req.job_id)
+        return {"status": "success", "message": "Funds refunded"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/wallet/balance/{agent_id}")
+async def get_balance(agent_id: str):
+    return {"agent_id": agent_id, "balance": escrow_manager.get_balance(agent_id)}
+
 
 # ============================================================
 # UTILITY FUNCTIONS

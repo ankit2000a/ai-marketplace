@@ -6,6 +6,7 @@ Price: $0.05 per chart
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from typing import Optional
 from datetime import datetime, timezone
 import uvicorn
 import requests
@@ -35,14 +36,20 @@ CHART_STYLE = 'default'  # ← Change from 'seaborn-v0_8-darkgrid'
 # ============================================================
 app = FastAPI(title=AGENT_NAME)
 
-class Task(BaseModel):
-    task_data: dict | str
+from a2a_protocol import JobOffer, AgentCard
+
+# ============================================================
+# FASTAPI APP
+# ============================================================
+app = FastAPI(title=AGENT_NAME)
 
 class TaskResult(BaseModel):
     status: str
     result: str  # Base64 encoded PNG
     invoice: float
     completed_at: str
+    error: Optional[str] = None
+
 
 # ============================================================
 # CHART GENERATION FUNCTIONS
@@ -51,8 +58,13 @@ class TaskResult(BaseModel):
 def generate_pie_chart(data: dict) -> str:
     """Generate pie chart and return base64 PNG"""
     try:
-        labels = data.get("labels", ["A", "B", "C"])
+        labels = data.get("labels", [])
         values = data.get("values", [30, 40, 30])
+        
+        # Auto-generate labels if missing or mismatch
+        if len(labels) != len(values):
+            labels = [f"Item {i+1}" for i in range(len(values))]
+            
         title = data.get("title", "Pie Chart")
         
         plt.style.use(CHART_STYLE)
@@ -142,30 +154,50 @@ def generate_line_chart(data: dict) -> str:
 # ============================================================
 
 @app.post("/execute_task", response_model=TaskResult)
-async def execute_task(task: Task):
+async def execute_task(offer: JobOffer):
     """
-    Execute chart generation task
-    
-    Expected task_data format:
-    {
-        "chart_type": "pie" | "bar" | "line",
-        "data": { ... chart-specific data ... }
-    }
+    Execute chart generation task using A2A Protocol
     """
     start_time = datetime.now(timezone.utc)
     
     print("\n" + "="*60)
-    print(f"📊 Received chart generation task")
+    print(f"📩 Received A2A Job Offer: {offer.job_id}")
+    print(f"   👤 Buyer: {offer.buyer_id}")
+    print(f"   💰 Budget Cap: ${offer.constraints.max_price}")
+    print(f"   🏷️  My Price:  ${PRICE_PER_TASK}")
+    
+    # 1. CHECK CONSTRAINTS (The "Mail Sorter" Logic)
+    if offer.constraints.max_price < PRICE_PER_TASK:
+        print(f"   ❌ REJECTED: Budget too low (${offer.constraints.max_price} < ${PRICE_PER_TASK})")
+        return TaskResult(
+            status="rejected",
+            result="",
+            invoice=0.0,
+            completed_at=datetime.now(timezone.utc).isoformat(),
+            error=f"Budget constraint not met. My price: {PRICE_PER_TASK}, Max budget: {offer.constraints.max_price}"
+        )
+    
+    print(f"   ✅ ACCEPTED: Budget sufficient")
     
     try:
-        # Parse task data
-        if isinstance(task.task_data, str):
-            task_dict = json.loads(task.task_data)
-        else:
-            task_dict = task.task_data
+        # Parse task data from payload
+        task_data = offer.task_payload
         
-        chart_type = task_dict.get("chart_type", "pie").lower()
-        chart_data = task_dict.get("data", {})
+        # Handle nested 'data' if present, or use payload directly
+        # The PM sends { "data": [...], "instruction": ... }
+        # But our chart logic expects specific keys. Let's adapt.
+        
+        chart_type = "pie" # Default
+        chart_data = {}
+        
+        if "chart_type" in task_data:
+            chart_type = task_data["chart_type"]
+            chart_data = task_data.get("data", {})
+        elif "data" in task_data:
+             # Try to infer from generic payload
+             chart_data = {"values": task_data["data"]}
+             if "instruction" in task_data:
+                 chart_data["title"] = task_data["instruction"]
         
         print(f"   Chart type: {chart_type}")
         print(f"   Data keys: {list(chart_data.keys())}")
@@ -219,6 +251,44 @@ async def health():
         "dpi": CHART_DPI
     }
 
+@app.get("/.well-known/agent.json", response_model=AgentCard)
+async def get_agent_card():
+    """Return the public Agent Card (Passport)"""
+    return AgentCard(
+        protocol_version="AI_MARKETPLACE_v1",
+        agent={
+            "name": AGENT_NAME,
+            "version": "1.0.0",
+            "description": f"Budget-friendly chart generation ({CHART_DPI} DPI)",
+            "vendor": "SanreAI",
+            "homepage": f"http://127.0.0.1:{AGENT_PORT}"
+        },
+        capabilities=[
+            {
+                "type": CAPABILITY,
+                "supported_chart_types": ["pie", "bar", "line"],
+                "output_formats": ["png"]
+            }
+        ],
+        pricing={
+            "model": "fixed",
+            "amount": PRICE_PER_TASK,
+            "currency": "USD",
+            "billing_unit": "per_chart"
+        },
+        performance={
+            "avg_latency_ms": 500,
+            "max_concurrent_jobs": 10
+        },
+        endpoints={
+            "execute_task": f"http://127.0.0.1:{AGENT_PORT}/execute_task",
+            "health": f"http://127.0.0.1:{AGENT_PORT}/health"
+        },
+        payment={
+            "accepted_methods": ["escrow"],
+            "wallet_address": "0x1234...abcd"
+        }
+    )
 # ============================================================
 # STARTUP: REGISTER WITH REGISTRY
 # ============================================================

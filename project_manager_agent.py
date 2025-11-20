@@ -26,6 +26,9 @@ import random
 import math
 import argparse
 import sys
+import uuid
+from a2a_protocol import JobOffer, JobConstraints
+# Note: Escrow is handled via Registry HTTP endpoints
 
 # ============================================================
 # CONFIGURATION
@@ -233,18 +236,67 @@ def hire_specialist(capability: str, task_data):
         agent_url = selected_agent['url']
         agent_price = selected_agent['price']
         
-        print(f"   🔄 Calling {agent_name}...")
+        # DEFINE BUDGET LIMIT (The "Money Clip")
+        if PM_STRATEGY == "cost_minimization":
+            budget_limit = 0.04
+        else:
+            budget_limit = max(0.10, agent_price)
+            
+        print(f"   🔄 Calling {agent_name} (Budget: ${budget_limit})...")
         
-        # Call agent
-        response = requests.post(
-            agent_url,
-            json={"task_data": task_data},
-            timeout=30
+        # CONSTRUCT JOB OFFER (AI_MARKETPLACE_v1)
+        job_id = f"job_{uuid.uuid4().hex[:8]}"
+        job_offer = JobOffer(
+            job_id=job_id,
+            buyer_id=AGENT_NAME,
+            capability=capability,
+            constraints=JobConstraints(
+                max_price=budget_limit,
+                max_latency_ms=5000,
+                required_format="json"
+            ),
+            task_payload=task_data if isinstance(task_data, dict) else {"data": task_data}
         )
+        
+        # 1. CREATE ESCROW (Lock Funds)
+        try:
+            requests.post(
+                f"{REGISTRY_URL}/escrow/create",
+                json={
+                    "job_id": job_id,
+                    "buyer_id": AGENT_NAME,
+                    "max_price": budget_limit
+                },
+                timeout=5
+            )
+        except Exception as e:
+            return {"error": f"Failed to create escrow: {str(e)}"}
+
+        # Call agent with A2A Protocol
+        try:
+            print(f"   📤 Sending JobOffer: {job_offer.model_dump_json()}")
+            response = requests.post(
+                agent_url,
+                json=job_offer.model_dump(),
+                timeout=30
+            )
+            if response.status_code != 200:
+                print(f"   ❌ Agent returned {response.status_code}: {response.text}")
+        except Exception as e:
+             # Refund if connection fails
+             requests.post(f"{REGISTRY_URL}/escrow/refund", json={"job_id": job_id})
+             return {"error": f"Connection failed: {str(e)}"}
         
         if response.status_code == 200:
             result_data = response.json()
+            
+            if result_data.get("status") == "rejected":
+                 print(f"   ⛔ Job REJECTED by agent: {result_data.get('error')}")
+                 requests.post(f"{REGISTRY_URL}/escrow/refund", json={"job_id": job_id})
+                 return {"error": f"Agent rejected job: {result_data.get('error')}"}
+
             result = result_data.get("result")
+            invoice_amount = result_data.get("invoice", 0.0)
             
             # VALIDATE RESULT
             if capability == "generate_charts":
@@ -255,52 +307,66 @@ def hire_specialist(capability: str, task_data):
                 is_valid, msg = True, "No validator"
             
             if is_valid:
-                # ONLY pay if valid!
-                print(f"   ✅ Result validated: {msg}")
-                
-                # Report successful transaction
+                # 2. RELEASE PAYMENT (Escrow enforces budget)
                 try:
+                    escrow_resp = requests.post(
+                        f"{REGISTRY_URL}/escrow/release",
+                        json={
+                            "job_id": job_id,
+                            "seller_id": agent_name,
+                            "actual_price": invoice_amount
+                        }
+                    )
+                    
+                    if escrow_resp.status_code != 200:
+                        # Overcharge or other error
+                        err_detail = escrow_resp.json().get("detail", "Unknown error")
+                        print(f"   🚨 PAYMENT FAILED: {err_detail}")
+                        return {"error": f"Payment failed: {err_detail}"}
+                        
+                    print(f"   ✅ Result validated: {msg}")
+                    print(f"   💸 Payment released: ${invoice_amount}")
+                    
+                    # Report successful transaction (for ratings)
                     requests.post(
                         f"{REGISTRY_URL}/report_transaction",
                         json={
                             "buyer_id": AGENT_NAME,
                             "seller_name": agent_name,
-                            "amount": agent_price,
+                            "amount": invoice_amount,
                             "success": True
-                        },
-                        timeout=5
+                        }
                     )
-                except:
-                    pass
-                
-                return {
-                    "agent_name": agent_name,
-                    "result": result,
-                    "invoice": agent_price
-                }
+                    
+                    return {
+                        "agent_name": agent_name,
+                        "result": result,
+                        "invoice": invoice_amount
+                    }
+                    
+                except Exception as e:
+                    return {"error": f"Escrow release failed: {str(e)}"}
+
             else:
-                # FAILED validation - no payment!
+                # FAILED validation - Refund!
                 print(f"   ❌ Validation failed: {msg}")
+                requests.post(f"{REGISTRY_URL}/escrow/refund", json={"job_id": job_id})
                 
-                # Report failed transaction (penalty to reputation)
-                try:
-                    requests.post(
-                        f"{REGISTRY_URL}/report_transaction",
-                        json={
-                            "buyer_id": AGENT_NAME,
-                            "seller_name": agent_name,
-                            "amount": 0.0,
-                            "success": False
-                        },
-                        timeout=5
-                    )
-                except:
-                    pass
+                # Report failed transaction
+                requests.post(
+                    f"{REGISTRY_URL}/report_transaction",
+                    json={
+                        "buyer_id": AGENT_NAME,
+                        "seller_name": agent_name,
+                        "amount": 0.0,
+                        "success": False
+                    }
+                )
                 
-                # Retry logic could go here (e.g. try 2nd best), but for now return error
                 return {"error": f"Validation failed: {msg}"}
         
         else:
+            requests.post(f"{REGISTRY_URL}/escrow/refund", json={"job_id": job_id})
             return {"error": f"HTTP {response.status_code}"}
             
     except Exception as e:

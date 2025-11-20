@@ -58,9 +58,9 @@ async def register_with_registry():
     
     registration_data = {
         "name": AGENT_NAME,
-        "capability": AGENT_CAPABILITY,  # ← Fixed variable name
-        "url": f"http://127.0.0.1:{AGENT_PORT}/execute_task",  # ← Fixed! Added /execute_task
-        "price": PRICE_PER_TASK,  # ← Fixed variable name
+        "capability": AGENT_CAPABILITY,
+        "url": f"http://127.0.0.1:{AGENT_PORT}/execute_task",
+        "price": PRICE_PER_TASK,
         "description": "AI-powered text summarization using Google Gemini"
     }
     
@@ -79,7 +79,7 @@ async def register_with_registry():
                     print(f"✅ Successfully registered with registry!")
                     print(f"   Agent: {AGENT_NAME}")
                     print(f"   Capability: {AGENT_CAPABILITY}")
-                    print(f"   URL: http://127.0.0.1:{AGENT_PORT}/execute_task")  # ← Show full URL
+                    print(f"   URL: http://127.0.0.1:{AGENT_PORT}/execute_task")
                     print(f"   Price: ${PRICE_PER_TASK}")
                     print(f"   🎯 NOW USING REAL GEMINI AI")
                     return
@@ -112,24 +112,89 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="AI Text Summarization Agent (Gemini-powered)", lifespan=lifespan)
 
 # ============================================================
+# AGENT CARD (PASSPORT)
+# ============================================================
+@app.get("/.well-known/agent.json")
+async def agent_card():
+    """Agent Card - Public metadata about this agent"""
+    return {
+        "protocol_version": "AI_MARKETPLACE_v1",
+        "agent": {
+            "name": AGENT_NAME,
+            "version": "1.0.0",
+            "description": "AI-powered text summarization using Google Gemini",
+            "vendor": "SanreAI",
+            "homepage": f"http://127.0.0.1:{AGENT_PORT}"
+        },
+        "capabilities": [
+            {
+                "type": AGENT_CAPABILITY,
+                "max_input_length": 10000,
+                "output_formats": ["text"]
+            }
+        ],
+        "pricing": {
+            "model": "fixed",
+            "amount": PRICE_PER_TASK,
+            "currency": "USD",
+            "billing_unit": "per_summary"
+        },
+        "performance": {
+            "avg_latency_ms": 800,
+            "max_concurrent_jobs": 5
+        },
+        "endpoints": {
+            "execute_task": f"http://127.0.0.1:{AGENT_PORT}/execute_task",
+            "health": f"http://127.0.0.1:{AGENT_PORT}/health"
+        },
+        "payment": {
+            "accepted_methods": ["escrow"],
+            "wallet_address": "0x9abc...ijkl"
+        }
+    }
+
+
+
+# ============================================================
 # MAIN ENDPOINT
 # ============================================================
-@app.post("/execute_task", response_model=TaskResponse)
-async def execute_task(request: TaskRequest):
+from a2a_protocol import JobOffer
+
+# ============================================================
+@app.post("/execute_task")
+async def execute_task(offer: JobOffer):
     """
-    Execute text summarization task using Google Gemini AI
+    Execute text summarization task (A2A Protocol)
     """
-    print(f"\n{'='*60}")
-    print(f"📋 Received summarization task")
-    print(f"   Input length: {len(request.task_data)} characters")
-    print(f"{'='*60}")
+    print(f"\n🤖 {AGENT_NAME}: Received Job Offer {offer.job_id}")
+    print(f"   Buyer: {offer.buyer_id}")
+    print(f"   Budget: ${offer.constraints.max_price:.2f}")
+    
+    # 1. CHECK BUDGET
+    if offer.constraints.max_price < PRICE_PER_TASK:
+        print(f"   ❌ REJECTED: Budget ${offer.constraints.max_price:.2f} < Price ${PRICE_PER_TASK:.2f}")
+        return {
+            "status": "rejected",
+            "error": f"Budget too low. My price: ${PRICE_PER_TASK:.2f}",
+            "job_id": offer.job_id
+        }
+    
+    # 2. EXTRACT DATA
+    task_payload = offer.task_payload
+    if "data" in task_payload:
+        text_to_summarize = task_payload["data"]
+    else:
+        # Fallback if payload is flat
+        text_to_summarize = str(task_payload)
+        
+    print(f"   Input length: {len(text_to_summarize)} characters")
     
     try:
         # Use Gemini AI for real summarization
-        model = genai.GenerativeModel('gemini-2.5-flash-lite')  # ← Correct model!
+        model = genai.GenerativeModel('gemini-2.5-flash-lite')
         
         # Create prompt
-        prompt = f"Provide a concise summary (2-3 sentences max) of the following text:\n\n{request.task_data}"
+        prompt = f"Provide a concise summary (2-3 sentences max) of the following text:\n\n{text_to_summarize}"
         
         print(f"🤖 Calling Gemini AI...")
         
@@ -145,30 +210,23 @@ async def execute_task(request: TaskRequest):
         print(f"   Output length: {len(summary_text)} characters")
         print(f"   Invoice: ${PRICE_PER_TASK}")
         
-        completed_at = datetime.now(UTC).isoformat()
-        
-        task_response = TaskResponse(
-            status="done",
-            result=summary_text,
-            invoice=PRICE_PER_TASK,  # ← Fixed variable name
-            completed_at=completed_at
-        )
-        
-        print(f"{'='*60}\n")
-        
-        return task_response
+        return {
+            "status": "done",
+            "result": summary_text,
+            "invoice": PRICE_PER_TASK,
+            "job_id": offer.job_id,
+            "agent_name": AGENT_NAME
+        }
         
     except Exception as e:
         error_msg = f"Summarization failed: {str(e)}"
         print(f"❌ {error_msg}")
         
-        # Return error response
-        return TaskResponse(
-            status="error",
-            result=f"[ERROR] {error_msg}",
-            invoice=0.0,
-            completed_at=datetime.now(UTC).isoformat()
-        )
+        return {
+            "status": "failed",
+            "error": error_msg,
+            "invoice": 0.0
+        }
 
 # ============================================================
 # HEALTH CHECK

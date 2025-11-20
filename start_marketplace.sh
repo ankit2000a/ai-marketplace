@@ -41,8 +41,16 @@ echo "🤖 Starting ChartBot Pro..."
 python chartbot_pro_agent.py > logs/chartbot_pro.log 2>&1 &
 sleep 2
 
-echo "🤖 Starting Project Manager..."
-python project_manager_agent.py > logs/project_manager.log 2>&1 &
+echo "🤖 Starting Project Manager (Budget)..."
+python project_manager_agent.py --port 8001 --strategy budget > logs/pm_budget.log 2>&1 &
+sleep 2
+
+echo "🤖 Starting Project Manager (Quality)..."
+python project_manager_agent.py --port 8005 --strategy quality > logs/pm_quality.log 2>&1 &
+sleep 2
+
+echo "🤖 Starting Project Manager (Balanced)..."
+python project_manager_agent.py --port 8006 --strategy balanced > logs/pm_balanced.log 2>&1 &
 sleep 2
 
 # Check status
@@ -51,7 +59,9 @@ echo "✅ All services started!"
 echo ""
 echo "📊 Running Services:"
 lsof -i :8000 | grep LISTEN && echo "   ✅ Registry (8000)"
-lsof -i :8001 | grep LISTEN && echo "   ✅ Project Manager (8001)"
+lsof -i :8001 | grep LISTEN && echo "   ✅ PM Budget (8001)"
+lsof -i :8005 | grep LISTEN && echo "   ✅ PM Quality (8005)"
+lsof -i :8006 | grep LISTEN && echo "   ✅ PM Balanced (8006)"
 lsof -i :8002 | grep LISTEN && echo "   ✅ Summarizer (8002)"
 lsof -i :8003 | grep LISTEN && echo "   ✅ ChartBot Pro (8003)"
 lsof -i :8004 | grep LISTEN && echo "   ✅ ChartBot Budget (8004)"
